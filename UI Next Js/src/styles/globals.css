@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Material-UI compatibility */
+#__next {
+  @apply h-full;
+}
+
+/* Custom styles that combine MUI and Tailwind */
+.mui-tailwind-card {
+  @apply bg-white dark:bg-gray-800 rounded-lg shadow-md p-4;
+}
+
+.mui-tailwind-button {
+  @apply transition-colors duration-200 ease-in-out;
+}
+
+/* Dark mode support */
+.dark {
+  color-scheme: dark;
+}
+
+/* Ensure proper stacking context */
+.MuiModal-root {
+  @apply z-50;
+}
