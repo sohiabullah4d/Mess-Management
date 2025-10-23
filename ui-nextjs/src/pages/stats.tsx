@@ -16,15 +16,21 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
+  // Paper,
   Alert,
   LinearProgress,
 } from "@mui/material";
-import { Download, Warning } from "@mui/icons-material";
+import { Download} from "@mui/icons-material";
 import { useAppContext } from "../context/AppContext";
 import { calculateMonthlyStats, exportToCSV } from "../utils/helpers";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import { UserOptions } from "jspdf-autotable";
+
+interface jsPDFWithAutoTable extends jsPDF {
+  autoTable: (options: UserOptions) => jsPDF;
+  lastAutoTable: { finalY: number };
+}
 
 const StatsPage: React.FC = () => {
   const { state } = useAppContext();
@@ -72,20 +78,20 @@ const StatsPage: React.FC = () => {
       item.name,
       `${item.totalUsed} ${item.unit}`,
     ]);
-    (doc as any).autoTable({
-      startY: 45,
+    (doc as jsPDFWithAutoTable).autoTable({
       head: [["Item", "Total Used"]],
       body: mostUsedData,
+      startY: 47
     });
 
     // Items needing restocking
-    const lastY = (doc as any).lastAutoTable.finalY + 10;
+    const lastY = (doc as jsPDFWithAutoTable).lastAutoTable.finalY + 10;
     doc.text("Items Needing Restocking:", 14, lastY);
     const restockingData = stats.itemsNeedRestocking.map((item) => [
       item.name,
       `${item.remaining} ${item.unit} remaining`,
     ]);
-    (doc as any).autoTable({
+    (doc as jsPDFWithAutoTable).autoTable({
       startY: lastY + 5,
       head: [["Item", "Remaining"]],
       body: restockingData,

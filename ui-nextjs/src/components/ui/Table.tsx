@@ -11,16 +11,16 @@ import {
   TableSortLabel,
 } from "@mui/material";
 
-export interface Column<T = any> {
+export interface Column<T extends object = Record<string, unknown>> {
   id: keyof T | string;
   label: string;
   sortable?: boolean;
   align?: "left" | "center" | "right";
   // Allow format to return *anything renderable*, and access the full row
-  format?: (value: any, row?: T) => React.ReactNode;
+  format?: (value: T[keyof T], row?: T) => React.ReactNode;
 }
 
-interface TableProps<T = any> {
+interface TableProps<T extends object = Record<string, unknown>> {
   columns: Column<T>[];
   data: T[];
   page: number;
@@ -90,7 +90,7 @@ export const Table = <T extends object>({
             {data.map((row, index) => (
               <TableRow key={index}>
                 {columns.map((column) => {
-                  const value = (row as any)[column.id];
+                  const value = row[column.id as keyof T];
                   return (
                     <TableCell
                       key={String(column.id)}

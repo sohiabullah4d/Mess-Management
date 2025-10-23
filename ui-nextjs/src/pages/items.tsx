@@ -44,16 +44,15 @@ const ItemsPage: React.FC = () => {
   // });
 
   const sortedItems = [...filteredItems].sort((a, b) => {
-  const aValue = a[orderBy as keyof Item];
-  const bValue = b[orderBy as keyof Item];
+    const aValue = a[orderBy as keyof Item];
+    const bValue = b[orderBy as keyof Item];
 
-  if (aValue == null || bValue == null) return 0; // handle undefined/null safely
+    if (aValue == null || bValue == null) return 0; // handle undefined/null safely
 
-  if (aValue < bValue) return order === "asc" ? -1 : 1;
-  if (aValue > bValue) return order === "asc" ? 1 : -1;
-  return 0;
-});
-
+    if (aValue < bValue) return order === "asc" ? -1 : 1;
+    if (aValue > bValue) return order === "asc" ? 1 : -1;
+    return 0;
+  });
 
   const paginatedItems = sortedItems.slice(
     page * rowsPerPage,
@@ -107,9 +106,9 @@ const ItemsPage: React.FC = () => {
       id: "status",
       label: "Status",
       sortable: true,
-      format: (value: string) => (
+      format: (value: string | number | undefined) => (
         <Chip
-          label={value}
+          label={value?.toString() || ""}
           color={value === "in-stock" ? "success" : "error"}
           size="small"
           className="capitalize"
@@ -120,7 +119,7 @@ const ItemsPage: React.FC = () => {
       id: "createdAt",
       label: "Created Date",
       sortable: true,
-      format: formatDate,
+      format: (value) => (typeof value === "string" ? formatDate(value) : ""),
     },
     { id: "notes", label: "Notes", sortable: false },
     {
@@ -128,7 +127,7 @@ const ItemsPage: React.FC = () => {
       label: "Actions",
       sortable: false,
       align: "center",
-      format: (value: any, row?: Item) => (
+      format: (value: unknown, row?: Item) => (
         <Box className="flex space-x-1">
           <IconButton
             size="small"

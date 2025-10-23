@@ -5,14 +5,14 @@ import {
   Button,
   Grid,
   TextField,
-  IconButton,
+  // IconButton,
   FormControl,
   InputLabel,
   Select,
   MenuItem,
   Alert,
 } from "@mui/material";
-import { Add, Delete, Event } from "@mui/icons-material";
+import { Add } from "@mui/icons-material";
 import { Modal } from "../components/ui/Modal";
 import { Table } from "../components/ui/Table";
 import { MealUsageForm } from "../components/shared/MealUsageForm";
@@ -94,13 +94,21 @@ const UsagePage: React.FC = () => {
   };
 
   const columns: Column<MealUsage>[] = [
-    { id: "date", label: "Date", sortable: true, format: formatDate },
+    { id: "date", label: "Date", sortable: true, format: (value) => formatDate(String(value)) },
     {
       id: "mealId",
       label: "Meal",
       sortable: true,
-      format: (value: string) => {
-        const meal = state.meals.find((m) => m.id === value);
+      format: (value: string | number | { itemId: string; totalUsed: number }[], row?: MealUsage) => {
+        // value can be a string (mealId), number, or the itemsUsed array depending on Column<T> usage,
+        // so normalize to a mealId string; fall back to row?.mealId when available.
+        const mealId =
+          typeof value === "string"
+            ? value
+            : typeof value === "number"
+            ? String(value)
+            : row?.mealId;
+        const meal = state.meals.find((m) => m.id === mealId);
         return meal?.name || "Unknown";
       },
     },
@@ -114,18 +122,32 @@ const UsagePage: React.FC = () => {
       id: "itemsUsed",
       label: "Items Used",
       sortable: false,
-      format: (value: MealUsage["itemsUsed"], row?: MealUsage) => (
-        <Box>
-          {row?.itemsUsed.map((item, index) => {
-            const itemData = state.items.find((i) => i.id === item.itemId);
-            return (
-              <Box key={index} sx={{ fontSize: "0.875rem" }}>
-                {itemData?.name}: {item.totalUsed} {itemData?.unit}
-              </Box>
-            );
-          })}
-        </Box>
-      ),
+      format: (
+        value: string | number | { itemId: string; totalUsed: number }[],
+        row?: MealUsage
+      ) => {
+        const itemsArray =
+          Array.isArray(value)
+            ? value
+            : row?.itemsUsed && Array.isArray(row.itemsUsed)
+            ? row.itemsUsed
+            : [];
+
+        if (!itemsArray.length) return null;
+
+        return (
+          <Box>
+            {itemsArray.map((item, index) => {
+              const itemData = state.items.find((i) => i.id === item.itemId);
+              return (
+                <Box key={index} sx={{ fontSize: "0.875rem" }}>
+                  {itemData?.name}: {item.totalUsed} {itemData?.unit}
+                </Box>
+              );
+            })}
+          </Box>
+        );
+      },
     },
   ];
 

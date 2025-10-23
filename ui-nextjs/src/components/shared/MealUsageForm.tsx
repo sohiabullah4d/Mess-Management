@@ -14,14 +14,20 @@ import { useFormik } from "formik";
 import { usageSchema } from "../../validations/usageSchema";
 import { useAppContext } from "../../context/AppContext";
 
+interface MealUsageFormValues {
+  mealId: string;
+  date: string;
+  peopleCount: number;
+}
+
 interface MealUsageFormProps {
-  onSubmit: (values: any) => void;
+  onSubmit: (values: MealUsageFormValues) => void;
   onCancel: () => void;
 }
 
 export const MealUsageForm: React.FC<MealUsageFormProps> = ({
   onSubmit,
-  onCancel,
+  // onCancel,
 }) => {
   const { state } = useAppContext();
 

@@ -3,14 +3,14 @@ import {
   Box,
   Typography,
   Button,
-  Grid,
+  // Grid,
   TextField,
   IconButton,
   Chip,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
+  // FormControl,
+  // InputLabel,
+  // Select,
+  // MenuItem,
 } from "@mui/material";
 import { Add, Edit, Delete, Search } from "@mui/icons-material";
 import { Modal } from "../components/ui/Modal";
@@ -18,7 +18,7 @@ import { Table } from "../components/ui/Table";
 import { MealForm } from "../components/shared/MealForm";
 import { useAppContext } from "../context/AppContext";
 import { MealRecipe } from "../context/types";
-import { formatDate } from "../utils/helpers";
+// import { formatDate } from "../utils/helpers";
 import { exportToCSV } from "../utils/helpers";
 import { Column } from "../components/ui/Table";
 
@@ -100,7 +100,7 @@ const MealsPage: React.FC = () => {
       id: "items",
       label: "Items Required",
       sortable: false,
-      format: (value: any, row?: MealRecipe) => (
+      format: (value: unknown, row?: MealRecipe) => (
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
           {row?.items.map((item, index) => {
             const itemData = state.items.find((i) => i.id === item.itemId);
@@ -121,7 +121,7 @@ const MealsPage: React.FC = () => {
       label: "Actions",
       sortable: false,
       align: "center",
-      format: (value: any, row?: MealRecipe) => (
+      format: (value: unknown, row?: MealRecipe) => (
         <Box>
           <IconButton size="small" onClick={() => handleEdit(row!)}>
             <Edit />

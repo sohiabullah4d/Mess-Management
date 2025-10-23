@@ -1,5 +1,5 @@
-export const validateItem = (values: any) => {
-  const errors: any = {};
+export const validateItem = (values: Item) => {
+  const errors: Record<string, string> = {};
 
   if (!values.name) {
     errors.name = "Item name is required";
@@ -18,8 +18,19 @@ export const validateItem = (values: any) => {
   return errors;
 };
 
-export const validateMeal = (values: any) => {
-  const errors: any = {};
+interface Item {
+  name?: string;
+  quantity?: number;
+  unit?: string;
+}
+
+interface MealValues {
+  name?: string;
+  items?: Item[];
+}
+
+export const validateMeal = (values: MealValues) => {
+  const errors: Record<string, string> = {};
 
   if (!values.name) {
     errors.name = "Meal name is required";
@@ -32,8 +43,14 @@ export const validateMeal = (values: any) => {
   return errors;
 };
 
-export const validateUsage = (values: any) => {
-  const errors: any = {};
+interface UsageValues {
+  mealId?: string;
+  date?: string;
+  peopleCount?: number;
+}
+
+export const validateUsage = (values: UsageValues) => {
+  const errors: Record<string, string> = {};
 
   if (!values.mealId) {
     errors.mealId = "Meal is required";

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, useTheme } from "@mui/material";
+import { Box } from "@mui/material";
 import { Header } from "./Header";
 import { Sidebar } from "./Sidebar";
 
@@ -9,7 +9,7 @@ interface LayoutProps {
 
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const theme = useTheme();
+  // const theme = useTheme();
 
   return (
     <Box className="flex flex-col min-h-screen bg-gray-50 dark:bg-gray-900">

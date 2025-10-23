@@ -23,7 +23,7 @@ const units = ["kg", "litre", "piece", "pack", "dozen", "bottle", "can"];
 export const ItemForm: React.FC<ItemFormProps> = ({
   item,
   onSubmit,
-  onCancel,
+  // onCancel,
 }) => {
   const { state } = useAppContext();
   const [existingNames, setExistingNames] = useState<string[]>([]);
