@@ -1,26 +1,23 @@
-import React, { useState } from "react";
+import { Add, Delete, Edit, Search } from "@mui/icons-material";
 import {
   Box,
-  Typography,
   Button,
+  Chip,
+  IconButton,
+  Stack,
   // Grid,
   TextField,
-  IconButton,
-  Chip,
-  // FormControl,
-  // InputLabel,
-  // Select,
-  // MenuItem,
+  Typography,
 } from "@mui/material";
-import { Add, Edit, Delete, Search } from "@mui/icons-material";
+import React, { useState } from "react";
+import { MealForm } from "../components/shared/MealForm";
 import { Modal } from "../components/ui/Modal";
 import { Table } from "../components/ui/Table";
-import { MealForm } from "../components/shared/MealForm";
 import { useAppContext } from "../context/AppContext";
 import { MealRecipe } from "../context/types";
 // import { formatDate } from "../utils/helpers";
-import { exportToCSV } from "../utils/helpers";
 import { Column } from "../components/ui/Table";
+import { exportToCSV } from "../utils/helpers";
 
 const MealsPage: React.FC = () => {
   const { state, addMeal, updateMeal, deleteMeal } = useAppContext();
@@ -135,14 +132,9 @@ const MealsPage: React.FC = () => {
   ];
 
   return (
-    <Box>
+    <Stack spacing={3}>
       <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          mb: 3,
-        }}
+        className='flex justify-between items-center'
       >
         <Typography variant="h4">Meal Recipes</Typography>
         <Box>
@@ -160,7 +152,7 @@ const MealsPage: React.FC = () => {
       </Box>
 
       {/* Search */}
-      <Box sx={{ mb: 3 }}>
+      <Box >
         <TextField
           fullWidth
           label="Search meals"
@@ -209,7 +201,7 @@ const MealsPage: React.FC = () => {
           onCancel={() => setModalOpen(false)}
         />
       </Modal>
-    </Box>
+    </Stack>
   );
 };
 

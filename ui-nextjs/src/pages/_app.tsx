@@ -1,9 +1,9 @@
-import React from "react";
-import type { AppProps } from "next/app";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import { AppProvider, useAppContext } from "../context/AppContext";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import type { AppProps } from "next/app";
 import { Layout } from "../components/layout/Layout";
+import { AppProvider, useAppContext } from "../context/AppContext";
+import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

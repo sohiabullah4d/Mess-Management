@@ -1,27 +1,25 @@
-import React, { useState } from "react";
+import { Add, Delete, Edit, Search } from "@mui/icons-material";
 import {
   Box,
-  Typography,
   Button,
   Chip,
-  TextField,
   FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
   Grid,
   IconButton,
+  InputLabel,
+  MenuItem,
   Paper,
+  Select,
+  TextField,
+  Typography,
 } from "@mui/material";
-import { Add, Edit, Delete, Search } from "@mui/icons-material";
-import { Modal } from "../components/ui/Modal";
-import { Table } from "../components/ui/Table";
+import React, { useState } from "react";
 import { ItemForm } from "../components/shared/ItemForm";
+import { Modal } from "../components/ui/Modal";
+import { Column, Table } from "../components/ui/Table";
 import { useAppContext } from "../context/AppContext";
 import { Item } from "../context/types";
-import { filterItems, formatDate } from "../utils/helpers";
-import { exportToCSV } from "../utils/helpers";
-import { Column } from "../components/ui/Table";
+import { exportToCSV, filterItems, formatDate } from "../utils/helpers";
 
 const ItemsPage: React.FC = () => {
   const { state, addItem, updateItem, deleteItem } = useAppContext();
@@ -153,7 +151,7 @@ const ItemsPage: React.FC = () => {
       <Box className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
         <Typography
           variant="h4"
-          className="font-bold text-gray-800 dark:text-white"
+          className="font-bold text-gray-800 "
         >
           Items Management
         </Typography>
@@ -177,7 +175,7 @@ const ItemsPage: React.FC = () => {
       </Box>
 
       {/* Filters */}
-      <Paper className="p-4 mb-6 bg-white dark:bg-gray-800 shadow-sm rounded-lg">
+      <Paper className="p-4 mb-6 bg-white  shadow-sm rounded-lg">
         <Grid container spacing={2}>
           <Grid item xs={12} sm={4}>
             <TextField
@@ -188,7 +186,7 @@ const ItemsPage: React.FC = () => {
               InputProps={{
                 startAdornment: <Search className="mr-2 text-gray-400" />,
               }}
-              className="bg-white dark:bg-gray-700"
+              className="bg-white "
             />
           </Grid>
           <Grid item xs={12} sm={4}>
@@ -200,7 +198,7 @@ const ItemsPage: React.FC = () => {
                 onChange={(e) =>
                   setFilters({ ...filters, status: e.target.value })
                 }
-                className="bg-white dark:bg-gray-700"
+                className="bg-white "
               >
                 <MenuItem value="">All</MenuItem>
                 <MenuItem value="in-stock">In Stock</MenuItem>
@@ -217,7 +215,7 @@ const ItemsPage: React.FC = () => {
                 onChange={(e) =>
                   setFilters({ ...filters, unit: e.target.value })
                 }
-                className="bg-white dark:bg-gray-700"
+                className="bg-white "
               >
                 <MenuItem value="">All</MenuItem>
                 <MenuItem value="kg">kg</MenuItem>
