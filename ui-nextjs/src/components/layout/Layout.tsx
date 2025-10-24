@@ -1,5 +1,5 @@
-import React, { useState } from "react";
 import { Box } from "@mui/material";
+import React, { useState } from "react";
 import { Header } from "./Header";
 import { Sidebar } from "./Sidebar";
 
@@ -12,16 +12,11 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   // const theme = useTheme();
 
   return (
-    <Box className="flex flex-col min-h-screen bg-gray-50 dark:bg-gray-900">
+    <Box>
       <Header />
-      <Box className="flex flex-grow">
-        <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-        <Box
-          component="main"
-          className="flex-grow p-6 transition-all duration-300"
-        >
-          {children}
-        </Box>
+      <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      <Box sx={{ m: '30px' }}>
+        {children}
       </Box>
     </Box>
   );
