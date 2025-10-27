@@ -58,7 +58,7 @@ export const ItemForm: React.FC<ItemFormProps> = ({
   });
 
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <form id="item-form" onSubmit={formik.handleSubmit}>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <TextField
@@ -87,7 +87,10 @@ export const ItemForm: React.FC<ItemFormProps> = ({
           />
         </Grid>
         <Grid item xs={6}>
-          <FormControl fullWidth>
+          <FormControl
+            fullWidth
+            error={formik.touched.unit && Boolean(formik.errors.unit)}
+          >
             <InputLabel id="unit-label">Unit</InputLabel>
             <Select
               labelId="unit-label"
@@ -95,7 +98,7 @@ export const ItemForm: React.FC<ItemFormProps> = ({
               name="unit"
               value={formik.values.unit}
               onChange={formik.handleChange}
-              error={formik.touched.unit && Boolean(formik.errors.unit)}
+              onBlur={formik.handleBlur}
               label="Unit"
             >
               {units.map((unit) => (
@@ -116,6 +119,7 @@ export const ItemForm: React.FC<ItemFormProps> = ({
             rows={3}
             value={formik.values.notes}
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             error={formik.touched.notes && Boolean(formik.errors.notes)}
             helperText={formik.touched.notes && formik.errors.notes}
           />

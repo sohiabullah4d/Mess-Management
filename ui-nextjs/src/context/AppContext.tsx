@@ -25,6 +25,12 @@ const initialState: AppState = {
   darkMode: false,
 };
 
+// Helper function to update item status based on quantity
+const updateItemStatus = (item: Item): Item => {
+  const status = item.quantity > 0 ? "in-stock" : "out-of-stock";
+  return { ...item, status };
+};
+
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
@@ -58,8 +64,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const updateItem = (item: Item) => {
-    const status = item.quantity > 0 ? "in-stock" : "out-of-stock";
-    dispatch({ type: "UPDATE_ITEM", payload: { ...item, status } });
+    const updatedItem = updateItemStatus(item); // Use helper function
+    dispatch({ type: "UPDATE_ITEM", payload: updatedItem });
   };
 
   const deleteItem = (id: string) => {
@@ -99,14 +105,15 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
       }
     }
 
-    // Update item quantities
+    // Update item quantities AND status
     const updatedItems = state.items.map((item) => {
       const usedItem = itemsUsed.find((i) => i.itemId === item.id);
       if (usedItem) {
-        return {
+        const updatedItem = {
           ...item,
           quantity: item.quantity - usedItem.totalUsed,
         };
+        return updateItemStatus(updatedItem); // Update status based on new quantity
       }
       return item;
     });
